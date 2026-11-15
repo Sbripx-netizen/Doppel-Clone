@@ -1,250 +1,105 @@
-// ===== DONNÉES (remplace par ton API / DB) =====
-const PRODUCTS = [
-  { id: 1, name: "Jordan 4 Bred Reimagined", price: 129.99, category: "sneakers", platform: "weidian", tags: ["jordan","bred","sneaker","basket"], img: "https://via.placeholder.com/300?text=J4+Bred" },
-  { id: 2, name: "Nike Dunk Low Panda", price: 89.50, category: "sneakers", platform: "taobao", tags: ["nike","dunk","panda","sneaker"], img: "https://via.placeholder.com/300?text=Dunk+Panda" },
-  { id: 3, name: "Essentials Hoodie Black", price: 45.00, category: "clothing", platform: "1688", tags: ["essentials","hoodie","fear of god","streetwear"], img: "https://via.placeholder.com/300?text=Essentials" },
-  { id: 4, name: "LV Keepall 45", price: 210.00, category: "bags", platform: "weidian", tags: ["lv","louis vuitton","keepall","bag","travel"], img: "https://via.placeholder.com/300?text=LV+Keepall" },
-  { id: 5, name: "Cartier Santos Medium", price: 380.00, category: "watches", platform: "taobao", tags: ["cartier","santos","watch","luxury"], img: "https://via.placeholder.com/300?text=Santos" },
-  { id: 6, name: "AirPods Pro 2 (Rep)", price: 55.00, category: "electronics", platform: "1688", tags: ["airpods","apple","earbuds","tech"], img: "https://via.placeholder.com/300?text=AirPods" },
-  { id: 7, name: "Yeezy Slide Onyx", price: 39.99, category: "sneakers", platform: "weidian", tags: ["yeezy","slide","onyx","sneaker","adidas"], img: "https://via.placeholder.com/300?text=Yeezy+Slide" },
-  { id: 8, name: "Stussy 8 Ball Tee", price: 28.00, category: "clothing", platform: "taobao", tags: ["stussy","tee","8 ball","streetwear"], img: "https://via.placeholder.com/300?text=Stussy" },
-  { id: 9, name: "Jordan 1 Chicago", price: 149.00, category: "sneakers", platform: "weidian", tags: ["jordan","chicago","sneaker","basket"], img: "https://via.placeholder.com/300?text=J1+Chicago" },
-  { id: 10, name: "New Balance 550 White", price: 79.00, category: "sneakers", platform: "taobao", tags: ["new balance","550","sneaker"], img: "https://via.placeholder.com/300?text=NB+550" },
-];
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doppel — QC Finder & Product Discovery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">doppel<span>.fit</span></div>
+    <nav>
+      <a href="#discover">Discover</a>
+      <a href="#qc">QC Photos</a>
+      <a href="#agents">Agents</a>
+      <a href="#bot" class="btn-small">Bot Dashboard</a>
+    </nav>
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="Search 15,000+ products...">
+      <button id="searchBtn">Search</button>
+    </div>
+  </header>
 
-const QC_PHOTOS = [
-  { id: 1, product: "J4 Bred", agent: "CNFans", img: "https://via.placeholder.com/200?text=QC1" },
-  { id: 2, product: "Dunk Panda", agent: "Oopbuy", img: "https://via.placeholder.com/200?text=QC2" },
-  { id: 3, product: "Essentials", agent: "Kakobuy", img: "https://via.placeholder.com/200?text=QC3" },
-  { id: 4, product: "LV Keepall", agent: "CNFans", img: "https://via.placeholder.com/200?text=QC4" },
-  { id: 5, product: "Santos", agent: "Oopbuy", img: "https://via.placeholder.com/200?text=QC5" },
-  { id: 6, product: "AirPods", agent: "Kakobuy", img: "https://via.placeholder.com/200?text=QC6" },
-];
+  <main>
+    <section class="hero">
+      <h1>Your go-to QC finder.</h1>
+      <p>Browse thousands of quality control photos from popular agents. Discover products from top ecommerce platforms.</p>
+      <div class="hero-actions">
+        <a href="#discover" class="btn">Browse Products</a>
+        <a href="#qc" class="btn btn-outline">View QC Photos</a>
+      </div>
+    </section>
 
-// ===== ÉTAT =====
-let state = {
-  query: "",
-  category: "all",
-  platform: "all",
-};
+    <section id="discover" class="section">
+      <h2>Product Discovery</h2>
+      <div class="filters">
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="sneakers">Sneakers</option>
+          <option value="clothing">Clothing</option>
+          <option value="bags">Bags</option>
+          <option value="watches">Watches</option>
+          <option value="electronics">Electronics</option>
+        </select>
+        <select id="platformFilter">
+          <option value="all">All Platforms</option>
+          <option value="taobao">Taobao</option>
+          <option value="weidian">Weidian</option>
+          <option value="1688">1688</option>
+        </select>
+        <button id="applyFilters" class="btn-small">Apply</button>
+      </div>
+      <div id="productGrid" class="grid">
+        <!-- produits injectés par JS -->
+      </div>
+    </section>
 
-// ===== HISTORIQUE (localStorage) =====
-const HISTORY_KEY = "doppel_search_history_v1";
+    <section id="recommendations" class="section" style="display:none;">
+      <h2>Pour toi</h2>
+      <p style="color:#888;margin-bottom:1.2rem;font-size:0.9rem;">Basé sur tes recherches récentes.</p>
+      <div id="recoGrid" class="grid">
+        <!-- cartes reco injectées -->
+      </div>
+    </section>
 
-function loadHistory() {
-  try {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
-  } catch { return []; }
-}
+    <section id="qc" class="section">
+      <h2>Latest QC Photos</h2>
+      <div id="qcGrid" class="grid qc-grid">
+        <!-- photos QC injectées -->
+      </div>
+    </section>
 
-function saveHistory(entry) {
-  const hist = loadHistory();
-  // dédoublonne sur la query, remet en tête
-  const filtered = hist.filter(h => h.query.toLowerCase() !== entry.query.toLowerCase());
-  filtered.unshift(entry);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(filtered.slice(0, 20)));
-}
-
-// ===== SIMILARITÉ =====
-// Score : mots-clés partagés (nom + tags) + catégorie + plateforme
-function tokenize(str) {
-  return str.toLowerCase()
-    .replace(/[^a-z0-9àâçéèêëîïôûùüÿñ\s]/gi, " ")
-    .split(/\s+/)
-    .filter(Boolean);
-}
-
-function similarityScore(product, query) {
-  if (!query) return 0;
-  const qTokens = tokenize(query);
-  if (!qTokens.length) return 0;
-
-  const pTokens = tokenize(product.name + " " + (product.tags || []).join(" "));
-  const pSet = new Set(pTokens);
-
-  let shared = 0;
-  for (const t of qTokens) {
-    if (pSet.has(t)) shared++;
-    else {
-      // match partiel (ex : "jord" vs "jordan")
-      for (const pt of pSet) {
-        if (pt.startsWith(t) && t.length >= 3) { shared += 0.5; break; }
-      }
-    }
-  }
-  return shared;
-}
-
-// ===== RECO =====
-// Combine : produits qui matchent la dernière recherche
-// + ceux qui matchent la catégorie la plus fréquente de l'historique
-function getRecommendations(limit = 6) {
-  const hist = loadHistory();
-  if (!hist.length) return [];
-
-  // Poids des catégories & plateformes vues dans l'historique
-  const catWeight = {};
-  const platWeight = {};
-  for (const h of hist) {
-    if (h.category && h.category !== "all") {
-      catWeight[h.category] = (catWeight[h.category] || 0) + 1;
-    }
-    if (h.platform && h.platform !== "all") {
-      platWeight[h.platform] = (platWeight[h.platform] || 0) + 1;
-    }
-  }
-
-  const scored = PRODUCTS.map(p => {
-    let score = 0;
-
-    // 1. mots-clés vs toutes les queries passées (la plus récente pèse plus)
-    hist.forEach((h, idx) => {
-      const recency = 1 / (idx + 1);
-      score += similarityScore(p, h.query) * recency * 2;
-    });
-
-    // 2. bonus catégorie
-    if (catWeight[p.category]) score += catWeight[p.category] * 1.5;
-
-    // 3. bonus plateforme
-    if (platWeight[p.platform]) score += platWeight[p.platform] * 0.5;
-
-    // 4. pénalité si jamais vu dans les clics (à brancher plus tard)
-    return { product: p, score };
-  });
-
-  return scored
-    .filter(s => s.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(s => s.product);
-}
-
-// ===== RENDU PRODUITS =====
-function renderProducts() {
-  const grid = document.getElementById("productGrid");
-  const q = state.query.toLowerCase();
-
-  const filtered = PRODUCTS.filter(p => {
-    const matchQuery = !q || p.name.toLowerCase().includes(q) ||
-      (p.tags || []).some(t => t.includes(q));
-    const matchCat = state.category === "all" || p.category === state.category;
-    const matchPlat = state.platform === "all" || p.platform === state.platform;
-    return matchQuery && matchCat && matchPlat;
-  });
-
-  if (!filtered.length) {
-    grid.innerHTML = `<p style="color:#888;grid-column:1/-1;padding:2rem 0;">Aucun produit trouvé.</p>`;
-  } else {
-    grid.innerHTML = filtered.map(p => `
-      <div class="card" onclick="window.location='#qc'">
-        <img class="card-img" src="${p.img}" alt="${p.name}" loading="lazy">
-        <div class="card-body">
-          <span class="platform">${p.platform}</span>
-          <h3>${p.name}</h3>
-          <div class="price">$${p.price.toFixed(2)}</div>
+    <section id="agents" class="section">
+      <h2>Popular Agents</h2>
+      <div class="agent-list">
+        <div class="agent-card">
+          <div class="agent-avatar">CN</div>
+          <h3>CNFans</h3>
+          <p>QC photos • Fast response</p>
+          <a href="#" class="btn-small">View Agent</a>
+        </div>
+        <div class="agent-card">
+          <div class="agent-avatar">OP</div>
+          <h3>Oopbuy</h3>
+          <p>QC photos • 1688 specialist</p>
+          <a href="#" class="btn-small">View Agent</a>
+        </div>
+        <div class="agent-card">
+          <div class="agent-avatar">KK</div>
+          <h3>Kakobuy</h3>
+          <p>QC photos • Weidian expert</p>
+          <a href="#" class="btn-small">View Agent</a>
         </div>
       </div>
-    `).join("");
-  }
+    </section>
+  </main>
 
-  renderRecommendations();
-}
+  <footer>
+    <p>doppel.fit — QC Finder & Product Discovery Platform</p>
+    <p><a href="#bot">Bot Dashboard</a> • <a href="#">Discord</a></p>
+  </footer>
 
-// ===== RENDU RECO =====
-function renderRecommendations() {
-  const section = document.getElementById("recommendations");
-  const grid = document.getElementById("recoGrid");
-  const recos = getRecommendations(6);
-
-  if (!recos.length) {
-    section.style.display = "none";
-    return;
-  }
-
-  section.style.display = "block";
-  grid.innerHTML = recos.map(p => `
-    <div class="card" onclick="window.location='#qc'">
-      <img class="card-img" src="${p.img}" alt="${p.name}" loading="lazy">
-      <div class="card-body">
-        <span class="platform">${p.platform}</span>
-        <h3>${p.name}</h3>
-        <div class="price">$${p.price.toFixed(2)}</div>
-      </div>
-    </div>
-  `).join("");
-}
-
-// ===== RENDU QC =====
-function renderQC() {
-  const grid = document.getElementById("qcGrid");
-  grid.innerHTML = QC_PHOTOS.map(qc => `
-    <div class="card">
-      <img class="card-img" src="${qc.img}" alt="${qc.product}" loading="lazy">
-      <div class="card-body">
-        <span class="platform">${qc.agent}</span>
-        <h3>${qc.product}</h3>
-      </div>
-    </div>
-  `).join("");
-}
-
-// ===== RECHERCHE =====
-function bindSearch() {
-  const input = document.getElementById("search");
-  const btn = document.getElementById("searchBtn");
-
-  const runSearch = () => {
-    const q = input.value.trim();
-    if (!q) return;
-    state.query = q;
-    saveHistory({
-      query: q,
-      category: state.category,
-      platform: state.platform,
-      ts: Date.now(),
-    });
-    renderProducts();
-    document.getElementById("discover").scrollIntoView({ behavior: "smooth" });
-  };
-
-  let timer;
-  input.addEventListener("input", (e) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      state.query = e.target.value.trim();
-      renderProducts();
-    }, 250);
-  });
-
-  btn.addEventListener("click", runSearch);
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") runSearch();
-  });
-}
-
-// ===== FILTRES =====
-function bindFilters() {
-  document.getElementById("applyFilters").addEventListener("click", () => {
-    state.category = document.getElementById("categoryFilter").value;
-    state.platform = document.getElementById("platformFilter").value;
-    renderProducts();
-    // on enregistre aussi le filtre seul comme "goût"
-    if (state.category !== "all" || state.platform !== "all") {
-      saveHistory({
-        query: "",
-        category: state.category,
-        platform: state.platform,
-        ts: Date.now(),
-      });
-    }
-  });
-}
-
-// ===== INIT =====
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts();
-  renderQC();
-  bindSearch();
-  bindFilters();
-});
+  <script src="app.js"></script>
+</body>
+</html>
