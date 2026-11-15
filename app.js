@@ -1,15 +1,15 @@
 // ===== DONNÉES (remplace par ton API / DB) =====
 const PRODUCTS = [
-  { id: 1, name: "Jordan 4 Bred Reimagined", price: 129.99, category: "sneakers", platform: "weidian", tags: ["jordan","bred","sneaker","basket"], img: "https://via.placeholder.com/300?text=J4+Bred" },
-  { id: 2, name: "Nike Dunk Low Panda", price: 89.50, category: "sneakers", platform: "taobao", tags: ["nike","dunk","panda","sneaker"], img: "https://via.placeholder.com/300?text=Dunk+Panda" },
-  { id: 3, name: "Essentials Hoodie Black", price: 45.00, category: "clothing", platform: "1688", tags: ["essentials","hoodie","fear of god","streetwear"], img: "https://via.placeholder.com/300?text=Essentials" },
-  { id: 4, name: "LV Keepall 45", price: 210.00, category: "bags", platform: "weidian", tags: ["lv","louis vuitton","keepall","bag","travel"], img: "https://via.placeholder.com/300?text=LV+Keepall" },
-  { id: 5, name: "Cartier Santos Medium", price: 380.00, category: "watches", platform: "taobao", tags: ["cartier","santos","watch","luxury"], img: "https://via.placeholder.com/300?text=Santos" },
-  { id: 6, name: "AirPods Pro 2 (Rep)", price: 55.00, category: "electronics", platform: "1688", tags: ["airpods","apple","earbuds","tech"], img: "https://via.placeholder.com/300?text=AirPods" },
-  { id: 7, name: "Yeezy Slide Onyx", price: 39.99, category: "sneakers", platform: "weidian", tags: ["yeezy","slide","onyx","sneaker","adidas"], img: "https://via.placeholder.com/300?text=Yeezy+Slide" },
-  { id: 8, name: "Stussy 8 Ball Tee", price: 28.00, category: "clothing", platform: "taobao", tags: ["stussy","tee","8 ball","streetwear"], img: "https://via.placeholder.com/300?text=Stussy" },
-  { id: 9, name: "Jordan 1 Chicago", price: 149.00, category: "sneakers", platform: "weidian", tags: ["jordan","chicago","sneaker","basket"], img: "https://via.placeholder.com/300?text=J1+Chicago" },
-  { id: 10, name: "New Balance 550 White", price: 79.00, category: "sneakers", platform: "taobao", tags: ["new balance","550","sneaker"], img: "https://via.placeholder.com/300?text=NB+550" },
+  { id: 1, name: "Jordan 4 Bred Reimagined", price: 129.99, category: "sneakers", platform: "weidian", tags: ["jordan","bred","sneaker","basket"], img: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&q=80" },
+  { id: 2, name: "Nike Dunk Low Panda", price: 89.50, category: "sneakers", platform: "taobao", tags: ["nike","dunk","panda","sneaker"], img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80" },
+  { id: 3, name: "Essentials Hoodie Black", price: 45.00, category: "clothing", platform: "1688", tags: ["essentials","hoodie","fear of god","streetwear"], img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&q=80" },
+  { id: 4, name: "LV Keepall 45", price: 210.00, category: "bags", platform: "weidian", tags: ["lv","louis vuitton","keepall","bag","travel"], img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80" },
+  { id: 5, name: "Cartier Santos Medium", price: 380.00, category: "watches", platform: "taobao", tags: ["cartier","santos","watch","luxury"], img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500&q=80" },
+  { id: 6, name: "AirPods Pro 2 (Rep)", price: 55.00, category: "electronics", platform: "1688", tags: ["airpods","apple","earbuds","tech"], img: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=500&q=80" },
+  { id: 7, name: "Yeezy Slide Onyx", price: 39.99, category: "sneakers", platform: "weidian", tags: ["yeezy","slide","onyx","sneaker","adidas"], img: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=500&q=80" },
+  { id: 8, name: "Stussy 8 Ball Tee", price: 28.00, category: "clothing", platform: "taobao", tags: ["stussy","tee","8 ball","streetwear"], img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80" },
+  { id: 9, name: "Jordan 1 Chicago", price: 149.00, category: "sneakers", platform: "weidian", tags: ["jordan","chicago","sneaker","basket"], img: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&q=80" },
+  { id: 10, name: "New Balance 550 White", price: 79.00, category: "sneakers", platform: "taobao", tags: ["new balance","550","sneaker"], img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&q=80" },
 ];
 
 const QC_PHOTOS = [
